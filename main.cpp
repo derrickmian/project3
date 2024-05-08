@@ -6,13 +6,32 @@
 #include "functions.h"
 
 int main() {
+
+    //generates random number based off the current time.
+    //randomizes placements of words within the grid.
+    //nullptr ensures different time each time.
     srand(time(nullptr));
-    const int gridSize = 10;
-    std::vector<std::string> words = {"HELLO", "WORLD", "CPLUSPLUS", "DERRICK", "EDDY"};
+
+    //Get GridSize from HTML
+    char* queryString = getenv("QUERY_STRING");
+    std::string qs(queryString ? queryString : "");
+    std::string gridSizeParam = "gridSize=";
+    size_t start = qs.find(gridSizeParam) + gridSizeParam.length();
+    size_t end = qs.find("&", start);
+    std::string gridSizeStr = qs.substr(start, end - start);
+    const int gridSize = std::stoi(gridSizeStr);
+
+    //Stores a dynamic array of words
+    std::vector<std::string> words = {"HELLO", "WORLD", "CPLUSPLUS", "DERRICK", "EDDY", "RICHARD", "LUIS"};
+
+    //Initializes the grid array.
     std::vector<std::vector<char>> grid;
 
+    //First Call to functions.cpp
     initializeGrid(grid, gridSize);
 
+    //foreach loop that goes through each word in the words array.
+    //determines if its place horizontally or vertically.
     for (const auto& word : words) {
         bool vertical = rand() % 2;
         if (!placeWordInGrid(grid, word, gridSize, vertical)) {
@@ -50,7 +69,7 @@ int main() {
     std::cout << "grid.onmousedown = function(event) { if (event.target.tagName === 'TD') { isSelecting = true; event.target.classList.add('selected'); selectedCells.push(event.target); }};";
     std::cout << "grid.onmouseover = function(event) { if (event.target.tagName === 'TD' && isSelecting) { event.target.classList.add('selected'); selectedCells.push(event.target); }};";
     std::cout << "grid.onmouseup = function() { isSelecting = false; validateWord(); };";
-    std::cout << "function validateWord() { const word = selectedCells.map(cell => cell.textContent).join(''); const validWords = ['HELLO', 'WORLD', 'CPLUSPLUS', 'DERRICK', 'EDDY']; if (validWords.includes(word)) { alert('Correct! ' + word); selectedCells.forEach(cell => cell.style.backgroundColor = 'lime'); } else { alert('Try again!'); selectedCells.forEach(cell => cell.classList.remove('selected')); } selectedCells = []; };";
+    std::cout << "function validateWord() { const word = selectedCells.map(cell => cell.textContent).join(''); const validWords = ['HELLO', 'WORLD', 'CPLUSPLUS', 'DERRICK', 'EDDY','RICHARD','LUIS']; if (validWords.includes(word)) { alert('Correct! ' + word); selectedCells.forEach(cell => cell.style.backgroundColor = 'lime'); } else { alert('Try again!'); selectedCells.forEach(cell => cell.classList.remove('selected')); } selectedCells = []; };";
     std::cout << "});";
     std::cout << "</script>";
     std::cout << "</body></html>";
