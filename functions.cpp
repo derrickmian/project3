@@ -20,15 +20,21 @@ bool placeWordInGrid(std::vector<std::vector<char>>& grid, const std::string& wo
         int startCol = rand() % gridSize;
 
         // Determine if the word fits vertically or horizontally
+        //if vertical is true:
         int endRow = startRow + (vertical ? word.size() - 1 : 0);
+        //if horiztonal
         int endCol = startCol + (vertical ? 0 : word.size() - 1);
 
         // Check boundaries
-        if (endRow >= gridSize || endCol >= gridSize) continue;
+        if (endRow >= gridSize || endCol >= gridSize) continue; //finds a randomly generated new placement for word.
 
         // Check if the word can be placed
+        //we assume it can be place
         bool canPlace = true;
-        for (int i = 0; i < word.size(); i++) {
+        //check each character where the word is 
+        //intended to be pplaced to ensure there 
+        //are no conflicts with existing words.
+        for (int i = 0; i < word.size(); i++) { 
             int row = startRow + (vertical ? i : 0);
             int col = startCol + (vertical ? 0 : i);
             if (grid[row][col] != '.' && grid[row][col] != word[i]) {
