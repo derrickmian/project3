@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Word Search Game</title>
+<style>
+    table {
+        border-collapse: collapse;
+        cursor: pointer;
+    }
+    td {
+        width: 30px;
+        height: 30px;
+        text-align: center;
+        vertical-align: middle;
+        border: 1px solid black;
+        font-size: 20px;
+        font-family: Arial, sans-serif;
+    }
+    td.selected {
+        background-color: #ADD8E6;
+    }
+    td.found {
+        background-color: lime;
+    }
+</style>
+</head>
+
+<body>
+    <h1>Word Search Game Setup</h1>
+    <form enctype="multipart/form-data" action="https://obi.kean.edu/~miand@kean.edu/cgi-bin/wordSearch.cgi" method="GET">
+        <label for="gridSize">Grid Size:</label>
+        <input type="number" id="gridSize" name="gridSize" min="5" max="20" required><br><br>
+        <input type="submit" value="Generate Word Search">
+    </form>
+    <div id="wordsToFind" style="display: none;">HELLO WORLD CPLUSPLUS DERRICK EDDY</div>
+    <table id="wordGrid"></table>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const grid = document.getElementById('wordGrid');
+            let isSelecting = false;
+            let selectedCells = [];
+
+            grid.addEventListener('mousedown', function(event) {
+                if (event.target.tagName === 'TD' && !isSelecting) {
+                    isSelecting = true;
+                    toggleCell(event.target);
+                }
+            });
+
+            grid.addEventListener('mouseover', function(event) {
+                if (event.target.tagName === 'TD' && isSelecting) {
+                    toggleCell(event.target);
+                }
+            });
+
+            grid.addEventListener('mouseup', function(event) {
+                if (isSelecting) {
+                    isSelecting = false;
+                    validateWord();
+                    selectedCells = []; // Clear selection after validation
+                }
+            });
+
+            document.addEventListener('mouseup', function() {
+                if (isSelecting) {
+                    isSelecting = false;
+                    validateWord();
+                    selectedCells = []; // Clear selection after validation
+                }
+            });
+
+            function toggleCell(cell) {
+                if (!cell.classList.contains('selected')) {
+                    cell.classList.add('selected');
+                    selectedCells.push(cell);
+                }
+            }
+
+            function validateWord() {
+                const word = selectedCells.map(cell => cell.textContent).join('');
+                const validWords = ['HELLO', 'WORLD', 'CPLUSPLUS', 'DERRICK', 'EDDY']; // List of valid words
+                if (validWords.includes(word)) {
+                    alert('Correct! ' + word);
+                    selectedCells.forEach(cell => cell.classList.add('found'));
+                } else {
+                    alert('Try again!');
+                    selectedCells.forEach(cell => cell.classList.remove('selected'));
+                }
+                selectedCells = []; // Clear the selection array
+            }
+        });
+    </script>
+</body>
+</html>
