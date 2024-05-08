@@ -33,10 +33,10 @@
         <input type="number" id="gridSize" name="gridSize" min="5" max="20" required><br><br>
         <input type="submit" value="Generate Word Search">
     </form>
-    <div id="wordsToFind" style="display: none;">HELLO WORLD CPLUSPLUS DERRICK EDDY</div>
+    <div id="wordsToFind" style="display: none;">HELLO WORLD CPLUSPLUS DERRICK EDDY RICHARD LUIS</div>
     <table id="wordGrid"></table>
 
-    <script>
+    <!-- <script>
         document.addEventListener('DOMContentLoaded', function() {
             const grid = document.getElementById('wordGrid');
             let isSelecting = false;
@@ -80,7 +80,7 @@
 
             function validateWord() {
                 const word = selectedCells.map(cell => cell.textContent).join('');
-                const validWords = ['HELLO', 'WORLD', 'CPLUSPLUS', 'DERRICK', 'EDDY']; // List of valid words
+                const validWords = ['HELLO', 'WORLD', 'CPLUSPLUS', 'DERRICK', 'EDDY', 'RICHARD', 'LUIS']; // List of valid words
                 if (validWords.includes(word)) {
                     alert('Correct! ' + word);
                     selectedCells.forEach(cell => cell.classList.add('found'));
@@ -91,6 +91,6 @@
                 selectedCells = []; // Clear the selection array
             }
         });
-    </script>
+    </script> -->
 </body>
 </html>
